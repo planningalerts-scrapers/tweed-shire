@@ -3,20 +3,20 @@ require 'scraperwiki.php';
 
 require 'scraperwiki/simple_html_dom.php';
 
-// Townsville City Council Development Applications scraper
+// Tweed Shire Council Development Applications scraper
 // (ICON Software Solutions PlanningXchange)
-// Sourced from http://http://wokim.townsville.qld.gov.au/Pages/XC.Track/SearchApplication.aspx?ss=sq
+// Sourced from http://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx
 // Formatted for http://www.planningalerts.org.au/
 
 date_default_timezone_set('Australia/Sydney');
 
 $date_format = 'Y-m-d';
 $cookie_file = '/tmp/cookies.txt';
-$comment_url = 'mailto:eplanning@townsville.qld.gov.au';
-$terms_url = 'http://wokim.townsville.qld.gov.au/Common/Common/Terms.aspx';
-$rss_feed = 'http://wokim.townsville.qld.gov.au/Pages/XC.Track/SearchApplication.aspx?o=rss&d=last14days&t=PDMCUCode,PDMCUimp,PDOpWorks,PDReconfig';
+$comment_url = 'mailto:tsc@tweed.nsw.gov.au';
+$terms_url = 'http://www.tweed.nsw.gov.au/DisclaimerMasterView.aspx';
+$rss_feed = 'http://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx?d=thismonth&k=LodgementDate&t=DA,CDC&o=rss';
 
-print "Scraping wokim.townsville.qld.gov.au...\n";
+print "Scraping s1.tweed.nsw.gov.au...\n";
 
 //accept_terms($terms_url, $cookie_file);
 
@@ -34,8 +34,7 @@ $rss = simplexml_load_string($rss_response);
 foreach ($rss->channel->item as $item)
 {
     // RSS title appears to be the council reference
-    $rss_title = explode('-', $item->title);
-    $council_reference = trim($rss_title[0]);
+    $council_reference = trim($item->title);
 
     print "Found $council_reference...\n";
 
@@ -44,34 +43,17 @@ foreach ($rss->channel->item as $item)
     $address = trim($rss_description[0]);
     $description = trim($rss_description[1]);
 
-    $info_url = trim((string)$item->link);
+    $info_url = 'http://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx' . trim($item->link);
 
     $date_scraped = date($date_format);
     $date_received = date($date_format, strtotime($item->pubDate));
-
-    /*
-    $curl = curl_init($info_url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
-    curl_setopt($curl, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
-    $application_response = curl_exec($curl);
-    curl_close($curl);
-
-  
-    $on_notice_matched = preg_match('/^.*<td.*>Application on Exhibition for (.*) Days.*<\/td>.*<td.*>(\d\d\/\d\d\/\d\d\d\d)<\/td>.*$/msU', $application_response, $on_notice_matches);
-    if ($on_notice_matched)
-    {
-        $on_notice_from = date_format(date_create_from_format('d/m/Y', $on_notice_matches[2]), $date_format);
-        $on_notice_to = date($date_format, strtotime($on_notice_from . " +" . $on_notice_matches[1] . " days"));
-    }
-    */
 
     $application = array(
         'council_reference' => $council_reference,
         'address' => $address,
         'description' => $description,
         'info_url' => $info_url,
-        'comment_url' => $comment_url,
+        'comment_url' => $comment_url . 'Application Enquiry: ' . $council_reference,
         'date_scraped' => $date_scraped,
         'date_received' => $date_received //,
         //'on_notice_from' => $on_notice_from,
@@ -107,9 +89,9 @@ function accept_terms($terms_url, $cookie_file)
     $postfields = array();
     $postfields['__VIEWSTATE'] = $viewstate;
     $postfields['__EVENTVALIDATION'] = $eventvalidation;
-    $postfields['ctl00$ctMain1$BtnAgree'] = 'I Agree';
-    $postfields['ctl00$ctMain1$chkAgree$ctl02'] = 'on';
     
+    $postfields['ctl00$cph_content$butAccept'] = 'I Accept';
+
     $curl = curl_init($terms_url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_POST, 1); 
