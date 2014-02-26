@@ -46,14 +46,14 @@ foreach ($rss->channel->item as $item)
     $info_url = 'http://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx' . trim($item->link);
 
     $date_scraped = date($date_format);
-    $date_received = date($date_format, strtotime($item->pubDate));
+    $date_received = date($date_format, strtotime($item->pubDateParsed));
 
     $application = array(
         'council_reference' => $council_reference,
         'address' => $address,
         'description' => $description,
         'info_url' => $info_url,
-        'comment_url' => $comment_url . 'Application Enquiry: ' . $council_reference,
+        'comment_url' => $comment_url . '?subject=Application Enquiry: ' . $council_reference,
         'date_scraped' => $date_scraped,
         'date_received' => $date_received //,
         //'on_notice_from' => $on_notice_from,
