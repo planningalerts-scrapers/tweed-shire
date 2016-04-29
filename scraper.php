@@ -34,19 +34,20 @@ $rss = simplexml_load_string($rss_response);
 foreach ($rss->channel->item as $item)
 {
     // RSS title appears to be the council reference
-    $council_reference = trim($item->title);
+    $rss_title = explode(' - ', $item->title);
+    $council_reference = trim($rss_title[0]);
 
     print "Found $council_reference...\n";
 
     // RSS description appears to be the address followed by the actual description
     $rss_description = preg_split('/\./', $item->description, 2);
     $address = trim($rss_description[0]);
-    $description = trim($rss_description[1]);
+    $description = trim($item->category . ' -' . $rss_description[1]);
 
     $info_url = 'http://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx' . trim($item->link);
 
-    $date_scraped = date($date_format);
-    $date_received = date($date_format, strtotime($item->pubDateParsed));
+    $date_scraped = date($date_format);  
+    $date_received = date($date_format, strtotime($item->pubDate));
 
     $application = array(
         'council_reference' => $council_reference,
@@ -63,6 +64,7 @@ foreach ($rss->channel->item as $item)
     $existingRecords = scraperwiki::select("* from data where `council_reference`='" . $application['council_reference'] . "'");
     if (sizeof($existingRecords) == 0)
     {
+        # print_r ($application);
         scraperwiki::save(array('council_reference'), $application);
     }
     else
