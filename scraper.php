@@ -5,7 +5,7 @@ require 'scraperwiki/simple_html_dom.php';
 
 // Tweed Shire Council Development Applications scraper
 // (ICON Software Solutions PlanningXchange)
-// Sourced from http://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx
+// Sourced from https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx
 // Formatted for http://www.planningalerts.org.au/
 
 date_default_timezone_set('Australia/Sydney');
@@ -14,7 +14,7 @@ $date_format = 'Y-m-d';
 $cookie_file = '/tmp/cookies.txt';
 $comment_url = 'mailto:tsc@tweed.nsw.gov.au';
 $terms_url = 'http://www.tweed.nsw.gov.au/DisclaimerMasterView.aspx';
-$rss_feed = 'http://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx?d=thismonth&k=LodgementDate&t=DA,CDC&o=rss';
+$rss_feed = 'https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx?d=thismonth&k=LodgementDate&t=DA,CDC&o=rss';
 
 print "Scraping s1.tweed.nsw.gov.au...\n";
 
@@ -44,7 +44,7 @@ foreach ($rss->channel->item as $item)
     $address = trim($rss_description[0]);
     $description = trim($item->category . ' -' . $rss_description[1]);
 
-    $info_url = 'http://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx' . trim($item->link);
+    $info_url = 'https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx' . trim($item->link);
 
     $date_scraped = date($date_format);  
     $date_received = date($date_format, strtotime($item->pubDate));
