@@ -23,6 +23,8 @@ print "Scraping s1.tweed.nsw.gov.au...\n";
 // Download and parse RSS feed (last 14 days of applications)
 $curl = curl_init($rss_feed);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
 curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (compatible; PlanningAlerts/0.1; +http://www.planningalerts.org.au/)");
 $rss_response = curl_exec($curl);
 curl_close($curl);
