@@ -42,11 +42,12 @@ foreach ($rss->channel->item as $item)
     // RSS description appears to be the address followed by the actual description
     $rss_description = preg_split('/\./', $item->description, 2);
     $address = trim($rss_description[0]);
+    $address = trim(preg_replace('/\s+/', ' ', $address));
     $description = trim($item->category . ' -' . $rss_description[1]);
 
     $info_url = 'https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx' . trim($item->link);
 
-    $date_scraped = date($date_format);  
+    $date_scraped = date($date_format);
     $date_received = date($date_format, strtotime($item->pubDate));
 
     $application = array(
@@ -81,23 +82,23 @@ function accept_terms($terms_url, $cookie_file)
     curl_setopt($curl, CURLOPT_COOKIEFILE, $cookie_file);
     $terms_response = curl_exec($curl);
     curl_close($curl);
-    
+
     preg_match('/<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.*)" \/>/', $terms_response, $viewstate_matches);
     $viewstate = $viewstate_matches[1];
-    
+
     preg_match('/<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.*)" \/>/', $terms_response, $eventvalidation_matches);
     $eventvalidation = $eventvalidation_matches[1];
-    
+
     $postfields = array();
     $postfields['__VIEWSTATE'] = $viewstate;
     $postfields['__EVENTVALIDATION'] = $eventvalidation;
-    
+
     $postfields['ctl00$cph_content$butAccept'] = 'I Accept';
 
     $curl = curl_init($terms_url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_POST, 1); 
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $postfields); 
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $postfields);
     curl_setopt($curl, CURLOPT_COOKIEJAR, $cookie_file);
     curl_setopt($curl, CURLOPT_COOKIEFILE, $cookie_file);
     curl_exec($curl);
