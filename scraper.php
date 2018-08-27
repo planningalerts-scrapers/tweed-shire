@@ -1,7 +1,6 @@
 <?php
-require 'scraperwiki.php';
-
-require 'scraperwiki/simple_html_dom.php';
+require_once 'vendor/autoload.php';
+require_once 'vendor/openaustralia/scraperwiki/scraperwiki.php';
 
 // Tweed Shire Council Development Applications scraper
 // (ICON Software Solutions PlanningXchange)
