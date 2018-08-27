@@ -39,8 +39,6 @@ foreach ($rss->channel->item as $item)
     $rss_title = explode(' - ', $item->title);
     $council_reference = trim($rss_title[0]);
 
-    print "Found $council_reference...\n";
-
     // RSS description appears to be the address followed by the actual description
     $rss_description = preg_split('/\./', $item->description, 2);
     $address = trim($rss_description[0]);
@@ -66,7 +64,7 @@ foreach ($rss->channel->item as $item)
     $existingRecords = scraperwiki::select("* from data where `council_reference`='" . $application['council_reference'] . "'");
     if (sizeof($existingRecords) == 0)
     {
-        # print_r ($application);
+        print ("Saving record " .$application['council_reference']. " - " .$application['address']. "\n");
         scraperwiki::save(array('council_reference'), $application);
     }
     else
