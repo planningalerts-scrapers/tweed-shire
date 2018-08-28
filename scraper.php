@@ -1,11 +1,10 @@
 <?php
-require 'scraperwiki.php';
-
-require 'scraperwiki/simple_html_dom.php';
+require_once 'vendor/autoload.php';
+require_once 'vendor/openaustralia/scraperwiki/scraperwiki.php';
 
 // Tweed Shire Council Development Applications scraper
 // (ICON Software Solutions PlanningXchange)
-// Sourced from http://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx
+// Sourced from https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx
 // Formatted for http://www.planningalerts.org.au/
 
 date_default_timezone_set('Australia/Sydney');
@@ -14,7 +13,7 @@ $date_format = 'Y-m-d';
 $cookie_file = '/tmp/cookies.txt';
 $comment_url = 'mailto:tsc@tweed.nsw.gov.au';
 $terms_url = 'http://www.tweed.nsw.gov.au/DisclaimerMasterView.aspx';
-$rss_feed = 'http://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx?d=thismonth&k=LodgementDate&t=DA,CDC&o=rss';
+$rss_feed = 'https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx?d=thismonth&k=LodgementDate&t=DA,CDC&o=rss';
 
 print "Scraping s1.tweed.nsw.gov.au...\n";
 
@@ -23,6 +22,8 @@ print "Scraping s1.tweed.nsw.gov.au...\n";
 // Download and parse RSS feed (last 14 days of applications)
 $curl = curl_init($rss_feed);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
 curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (compatible; PlanningAlerts/0.1; +http://www.planningalerts.org.au/)");
 $rss_response = curl_exec($curl);
 curl_close($curl);
@@ -37,16 +38,15 @@ foreach ($rss->channel->item as $item)
     $rss_title = explode(' - ', $item->title);
     $council_reference = trim($rss_title[0]);
 
-    print "Found $council_reference...\n";
-
     // RSS description appears to be the address followed by the actual description
     $rss_description = preg_split('/\./', $item->description, 2);
     $address = trim($rss_description[0]);
+    $address = trim(preg_replace('/\s+/', ' ', $address));
     $description = trim($item->category . ' -' . $rss_description[1]);
 
-    $info_url = 'http://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx' . trim($item->link);
+    $info_url = 'https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx' . trim($item->link);
 
-    $date_scraped = date($date_format);  
+    $date_scraped = date($date_format);
     $date_received = date($date_format, strtotime($item->pubDate));
 
     $application = array(
@@ -54,7 +54,7 @@ foreach ($rss->channel->item as $item)
         'address' => $address,
         'description' => $description,
         'info_url' => $info_url,
-        'comment_url' => $comment_url . '?subject=Application%20Enquiry:%20' . $council_reference,
+        'comment_url' => $comment_url . '?subject=Development%20Application%20Enquiry:%20' . $council_reference,
         'date_scraped' => $date_scraped,
         'date_received' => $date_received //,
         //'on_notice_from' => $on_notice_from,
@@ -64,7 +64,7 @@ foreach ($rss->channel->item as $item)
     $existingRecords = scraperwiki::select("* from data where `council_reference`='" . $application['council_reference'] . "'");
     if (sizeof($existingRecords) == 0)
     {
-        # print_r ($application);
+        print ("Saving record " .$application['council_reference']. " - " .$application['address']. "\n");
         scraperwiki::save(array('council_reference'), $application);
     }
     else
@@ -81,23 +81,23 @@ function accept_terms($terms_url, $cookie_file)
     curl_setopt($curl, CURLOPT_COOKIEFILE, $cookie_file);
     $terms_response = curl_exec($curl);
     curl_close($curl);
-    
+
     preg_match('/<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.*)" \/>/', $terms_response, $viewstate_matches);
     $viewstate = $viewstate_matches[1];
-    
+
     preg_match('/<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.*)" \/>/', $terms_response, $eventvalidation_matches);
     $eventvalidation = $eventvalidation_matches[1];
-    
+
     $postfields = array();
     $postfields['__VIEWSTATE'] = $viewstate;
     $postfields['__EVENTVALIDATION'] = $eventvalidation;
-    
+
     $postfields['ctl00$cph_content$butAccept'] = 'I Accept';
 
     $curl = curl_init($terms_url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_POST, 1); 
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $postfields); 
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $postfields);
     curl_setopt($curl, CURLOPT_COOKIEJAR, $cookie_file);
     curl_setopt($curl, CURLOPT_COOKIEFILE, $cookie_file);
     curl_exec($curl);
