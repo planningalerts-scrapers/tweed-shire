@@ -61,16 +61,8 @@ foreach ($rss->channel->item as $item)
         //'on_notice_to' => $on_notice_to
     );
 
-    $existingRecords = scraperwiki::select("* from data where `council_reference`='" . $application['council_reference'] . "'");
-    if (sizeof($existingRecords) == 0)
-    {
-        print ("Saving record " .$application['council_reference']. " - " .$application['address']. "\n");
-        scraperwiki::save(array('council_reference'), $application);
-    }
-    else
-    {
-        print ("Skipping already saved record " . $application['council_reference'] . "\n");
-    }
+    print ("Saving record " .$application['council_reference']. " - " .$application['address']. "\n");
+    scraperwiki::save(array('council_reference'), $application);
 }
 
 function accept_terms($terms_url, $cookie_file)
