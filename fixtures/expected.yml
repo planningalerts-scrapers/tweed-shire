@@ -1,0 +1,83 @@
+---
+- council_reference: DA07/0828.01
+  description: amendment to Development Consent DA07/0828 for a dwelling addition
+    comprising poolside roof, deck and carport with building line variation
+  date_received: '2019-06-05'
+  address: 18 The Bowsprit TWEED HEADS NSW 2485
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819755
+- council_reference: DA14/0147.01
+  description: amendment to Development Consent DA14/0147 for a verandah addition
+    to existing dwelling
+  date_received: '2019-06-06'
+  address: 33 Mount Bilinga Circuit BILAMBIL HEIGHTS NSW 2486
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819875
+- council_reference: DA19/0016.01
+  description: amendment to Development Consent DA19/0016 for alterations and additions
+    to existing dwelling
+  date_received: '2019-06-03'
+  address: 22 Seaview Road BANORA POINT NSW 2486
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819442
+- council_reference: DA19/0372
+  description: dwelling with attached garage
+  date_received: '2019-06-03'
+  address: 11 Candleberry Street MURWILLUMBAH NSW 2484
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819451
+- council_reference: DA19/0373
+  description: two (2) lot strata subdivision of existing dual occupancy
+  date_received: '2019-06-04'
+  address: 64 James Street MURWILLUMBAH NSW 2484
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819499
+- council_reference: DA19/0374
+  description: in-ground swimming pool
+  date_received: '2019-06-04'
+  address: 19 Blundell Boulevard TWEED HEADS SOUTH NSW 2486
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819596
+- council_reference: DA19/0375
+  description: carport
+  date_received: '2019-06-05'
+  address: 21 Compass Way TWEED HEADS NSW 2485
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819732
+- council_reference: DA19/0376
+  description: demolition of dog pound
+  date_received: '2019-06-05'
+  address: 298 Bartletts Road EVIRON NSW 2484
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819747
+- council_reference: DA19/0377
+  description: signage for preschool (one pylon and one fence mounted)
+  date_received: '2019-06-05'
+  address: 2 - 4 Byangum Road MURWILLUMBAH NSW 2484
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819760
+- council_reference: DA19/0378
+  description: alterations and additions to existing dwelling including in-ground
+    swimming pool
+  date_received: '2019-06-06'
+  address: 41 Royal Drive POTTSVILLE NSW 2489
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819818
+- council_reference: DA19/0379
+  description: in-ground swimming pool
+  date_received: '2019-06-06'
+  address: 11 Coquille Place TWEED HEADS SOUTH NSW 2486
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819872
+- council_reference: DA19/0380
+  description: roofed deck
+  date_received: '2019-06-07'
+  address: 4 Caffrey Close TWEED HEADS WEST NSW 2485
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819934
+- council_reference: DA19/0381
+  description: 2.1 m boundary fence
+  date_received: '2019-06-07'
+  address: 69 Byangum Road MURWILLUMBAH NSW 2484
+  date_scraped: '2019-05-15'
+  info_url: https://s1.tweed.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx/Pages/XC.Track/SearchApplication.aspx?id=819955
