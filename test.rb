@@ -6,6 +6,10 @@ File.delete("./data.sqlite") if File.exist?("./data.sqlite")
 system("php scraper.php")
 
 results_php = ScraperWiki.select("* from data order by council_reference")
+results_php = results_php.map do |record|
+  record.delete("id")
+  record
+end
 
 File.open("results_php.yml", "w") do |f|
   f.write(results_php.to_yaml)

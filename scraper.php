@@ -51,12 +51,11 @@ foreach ($rss->channel->item as $item)
 
     $application = array(
         'council_reference' => $council_reference,
-        'address' => $address,
         'description' => $description,
-        'info_url' => $info_url,
-        'comment_url' => $comment_url . '?subject=Development%20Application%20Enquiry:%20' . $council_reference,
+        'date_received' => $date_received,
+        'address' => $address,
         'date_scraped' => $date_scraped,
-        'date_received' => $date_received //,
+        'info_url' => $info_url
         //'on_notice_from' => $on_notice_from,
         //'on_notice_to' => $on_notice_to
     );
