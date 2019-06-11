@@ -5,5 +5,7 @@ IconScraper.scrape_with_params(
   period: "thismonth",
   types: ["DA", "CDC"]
 ) do |record|
+  record["address"] = record["address"].gsub(",", "")
+  record["info_url"] = record["info_url"].split("?")[0] + "/Pages/XC.Track/SearchApplication.aspx?" + record["info_url"].split("?")[1]
   IconScraper.save(record)
 end
