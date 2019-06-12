@@ -1,7 +1,2 @@
-# Tweed Shire Council scraper
-
-* Server - .NET - XC.Track
-* Cookie tracking - No
-* RSS - Yes
-
-Enjoy
+This scraper has been merged into https://github.com/planningalerts-scrapers/multiple_icon
+with authority_label tweed
